@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}Login | Blog{% endblock title %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center h-100 w-100" style="min-height: 100vh; min-witdh: 100vh;">
+	<div class="card" style="width: 20rem;">
+
+		<h3 class="card-header fw-bold text-center">Login to website</h3>
+
+		<div class="card-body text-center">
+			<form action="{% url 'user:login' %}" method="post">
+				{% csrf_token %}
+
+				<div class="mb-3">
+					<div class="form-text text-danger-emphasis">
+						{% for error in form.non_field_errors %}
+							<p class="w-100 text-start">{{ error }}</p>
+						{% endfor %}
+					</div>
+				</div>
+
+				<div class="mb-3">
+					<label for="id_username" class="form-label w-100 text-start">Username</label>
+					<input type="text" name="username" class="form-control" id="id_username" autocomplete="username" required>
+					<div id="id_username_errors" class="form-text text-danger-emphasis">
+						{% for error in form.username.errors %}
+							<p class="w-100 text-start">{{ error }}</p>
+						{% endfor %}
+					</div>
+				</div>
+
+				<div class="mb-3">
+					<label for="id_password" class="form-label w-100 text-start">Password</label>
+					<input type="password" name="password" class="form-control" id="id_password" autocomplete="password" required>
+					<div id="id_password_errors" class="form-text text-danger-emphasis">
+						{% for error in form.password.errors %}
+							<p class="w-100 text-start">{{ error }}</p>
+						{% endfor %}
+					</div>
+				</div>
+
+				<div class="mb-3 text-center">
+					<a href="{% url "user:register" %}" class="link-primary link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover">Not registered?</a>
+				</div>
+
+				<button type="submit" class="btn btn-primary w-100">Login</button>
+			</form>
+		</div>
+
+	</div>
+</div>
+{% endblock %}

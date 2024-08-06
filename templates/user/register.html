@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block title %}Register | blog{% endblock title %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center h-100 w-100" style="min-height: 100vh; min-witdh: 100vh;">
+	<div class="card" style="width: 20rem;">
+
+		<h3 class="card-header fw-bold text-center">Register to website</h3>
+
+		<div class="card-body text-center">
+			<form action="{% url 'user:register' %}" method="post">
+				{% csrf_token %}
+
+				<div class="mb-3">
+					<div class="form-text text-danger-emphasis">
+						{% for error in form.non_field_errors %}
+							<p class="w-100 text-start">{{ error }}</p>
+						{% endfor %}
+					</div>
+				</div>
+
+				<div class="mb-3">
+					<label for="id_username" class="form-label w-100 text-start">Username</label>
+					<input type="text" name="username" class="form-control" id="id_username" autocomplete="username" required>
+					<div id="id_username_errors" class="form-text text-danger-emphasis">
+						{% for error in form.username.errors %}
+							<p class="w-100 text-start">{{ error }}</p>
+						{% endfor %}
+					</div>
+				</div>
+
+				<div class="mb-3">
+					<label for="id_email" class="form-label w-100 text-start">Email</label>
+					<input type="email" name="email" class="form-control" id="id_email" autocomplete="email" required>
+					<div id="id_email_errors" class="form-text text-danger-emphasis">
+						{% for error in form.email.errors %}
+							<p class="w-100 text-start">{{ error }}</p>
+						{% endfor %}
+					</div>
+				</div>
+
+				<div class="mb-3">
+					<label for="id_password1" class="form-label w-100 text-start">Password</label>
+					<input type="password" name="password1" class="form-control" id="id_password1" autocomplete="password" required>
+					<div id="id_password1_errors" class="form-text text-danger-emphasis">
+						{% for error in form.password1.errors %}
+							<p class="w-100 text-start">{{ error }}</p>
+						{% endfor %}
+					</div>
+				</div>
+
+				<div class="mb-3">
+					<label for="id_password2" class="form-label w-100 text-start">Confirm Password</label>
+					<input type="password" name="password2" class="form-control" id="id_password2" autocomplete="password" required>
+					<div id="id_password2_errors" class="form-text text-danger-emphasis">
+						{% for error in form.password2.errors %}
+							<p class="w-100 text-start">{{ error }}</p>
+						{% endfor %}
+					</div>
+				</div>
+
+				<div class="mb-3 text-center">
+					<a href="{% url "user:login" %}" class="link-primary link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover">Already registered?</a>
+				</div>
+
+				<button type="submit" class="btn btn-primary w-100">Register</button>
+			</form>
+		</div>
+
+	</div>
+</div>
+{% endblock %}
+
+{% comment %} {% block content %}
+<div class="container">
+    <h1>Create Your Account</h1>
+    <form method="post" action="{% url 'user:register' %}">
+        <ul class="errorlist"><li>A user with that username already exists.</li></ul>
+        {% csrf_token %}
+
+        <div>
+            <label for="id_username">Username</label>
+            <input type="text" name="username" id="id_username" required autocomplete="username" maxlength="{{ form.username.field.max_length }}">
+        </div>
+
+        <div>
+            <label for="id_email">Email</label>
+            <input type="email" name="email" id="id_email" required autocomplete="email">
+        </div>
+
+        <div>
+            <label for="id_password1">Password</label>
+            <input type="password" name="password1" id="id_password1" required>
+        </div>
+
+        <div>
+            <label for="id_password2">Confirm Password</label>
+            <input type="password" name="password2" id="id_password2" required>
+        </div>
+
+        <input type="submit" value="save">
+    </form>
+</div>
+{% endblock content %} {% endcomment %}

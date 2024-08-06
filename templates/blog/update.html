@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+
+{% block title %}Blog | Update{% endblock title %}
+
+{% block content %}
+<div class="container mt-5" style="max-width: 48rem">
+    <div class="card">
+
+        <h3 class="card-header fw-bold text-center">Update blog</h3>
+
+        <div class="card-body">
+            {% if post.author == user %}
+                <form action="{% url "blog:update" post.pk %}" method="post">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <div class="form-text text-danger-emphasis">
+                            {% for error in form.non_field_errors %}
+                                <p class="w-100 text-start">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="id_title" class="form-text">Title</label>
+                        <input type="text" name="title" id="id_title" value="{{ post.title }}" class="form-control" autocomplete="off" maxlength="{{ form.title.meta.maxlength }}" required>
+                        <div id="id_title_errors" class="form-text text-danger-emphasis">
+                            {% for error in form.title.errors %}
+                                <p class="w-100 text-start">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="id_text" class="form-text">Content</label>
+                        <textarea name="text" id="id_text" class="form-control" rows="12" required>{{ post.text }}</textarea>
+                        <div id="id_text_errors" class="form-text text-danger-emphasis">
+                            {% for error in form.text.errors %}
+                                <p class="w-100 text-start">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="id_status" class="form-text">Status</label>
+                        <select name="status" id="is_status" class="form-select" value="{{ post.status }}">
+                            <option value="DRAFT" {% if post.status == "DRAFT"%} selected {% endif %}>Draft</option>
+                            <option value="PUBLISH" {% if post.status == "PUBLISH"%} selected {% endif %}>Publish</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">Update</button>
+                </form>
+            </div>
+
+        {% else %}
+            <p class="card-text text-center">You are not author of this post.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

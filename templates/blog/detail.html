@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Blog - {{ post.title }} by {{ post.author }}{% endblock title %}
+
+{% block content %}
+<div class="container mt-5" style="max-width: 48rem">
+    <div class="p-5 mb-5 bg-body-tertiary rounded-1">
+        <h3 class="fs-3 fw-bold">{{ post.title }}</h3>
+
+        <div class="d-flex justify-content-between text-body-secondary mb-3">
+            <span>by {{ post.author }}</span>
+            <span>{{ post.published_date }}</span>
+        </div>
+
+        <p class="fs-6">{{ post.text }}</p>
+    </div>
+
+    <div class="p-5 mb-4 bg-body-tertiary rounded-1">
+        <h3 class="fw-bold">Comments</h3>
+
+        {% if user.is_authenticated %}
+            <form action="{% url "blog:detail" post.pk %}" method="post" class="mb-3">
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <textarea name="text" id="id_text" rows="5" class="form-control" placeholder="your comment" required></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">Create</button>
+            </form>
+
+        {% else %}
+            <p>Please <a href="{% url "user:login" %}" class="link-primary link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover">login</a> to comment.</p>
+        {% endif %}
+
+        <div class="border-top border-1">
+            {% for comment in comments %}
+                <div class="card mt-3">
+                    <div class="card-body text-bg-tertiary">
+                        <h5 class="fw-bold">{{ comment.user.username }}</h5>
+                        <p class="card-text">{{ comment.text }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock content %}

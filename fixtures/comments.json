@@ -1,0 +1,42 @@
+[
+    {
+        "model": "blog.comment",
+        "pk": 1,
+        "fields": {
+            "post": 1,
+            "user": 4,
+            "text": "Yeah I total agree with your thoughts",
+            "creation_date": "2024-07-31T13:45:10Z"
+        }
+    },
+    {
+        "model": "blog.comment",
+        "pk": 2,
+        "fields": {
+            "post": 1,
+            "user": 5,
+            "text": "That sounds impressive! I think that you might have overlooked the situation.",
+            "creation_date": "2024-07-31T13:47:52Z"
+        }
+    },
+    {
+        "model": "blog.comment",
+        "pk": 3,
+        "fields": {
+            "post": 1,
+            "user": 5,
+            "text": "Hey there!",
+            "creation_date": "2024-07-31T14:12:06.088Z"
+        }
+    },
+    {
+        "model": "blog.comment",
+        "pk": 4,
+        "fields": {
+            "post": 8,
+            "user": 5,
+            "text": "Very smart",
+            "creation_date": "2024-08-06T18:06:46.133Z"
+        }
+    }
+]

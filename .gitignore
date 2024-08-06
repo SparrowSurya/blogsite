@@ -1,0 +1,20 @@
+# database
+db.*
+*.sqlite3
+*.db
+
+# logs
+*.log
+
+# cache
+__pycache__
+
+# environment
+venv
+.venv
+.env
+env
+
+# locals
+locale
+

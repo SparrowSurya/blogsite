@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Blog | Delete{% endblock title %}
+
+{% block content %}
+<div class="container mt-5" style="max-width: 48rem">
+    <div class="card">
+        <h3 class="card-header fw-bold text-center">Delete Post</h3>
+
+        <div class="card-body">
+            {% if user == post.author %}
+                <p class="card-text">
+                    Are you sure want to delete blog
+                    <span class="fw-bold">{{ post.title }}</span>
+                </p>
+
+                <form action="{% url "blog:delete" post.pk %}" method="post">
+                    {% csrf_token %}
+
+                    <button type="submit" class="btn btn-primary w-100">Delete</button>
+                </form>
+            {% else %}
+                <p class="card-text text-center">You are not authorised to delete this blog!</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock content %}
