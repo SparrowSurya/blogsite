@@ -1,11 +1,10 @@
 from django.contrib.auth.views import LoginView, LogoutView
-from django.views.generic import CreateView, TemplateView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import CreateView, DetailView
 from django.urls import reverse_lazy
-from typing import Dict, Any
+from django.contrib.auth.models import User
 
 from . import forms
-import blog.models
+from blog.models import Post
 
 
 class UserRegistrationView(CreateView):
@@ -30,12 +29,17 @@ class UserLogoutView(LogoutView):
     next_page = "blog:list"
 
 
-class UserDashboardView(LoginRequiredMixin, TemplateView):
+class UserProfileView(DetailView):
     """User dashboard view."""
 
-    template_name = "user/dashboard.html"
+    model = User
+    context_object_name = "user_obj"
+    template_name = "user/profile.html"
 
-    def get_context_data(self, **kwargs) -> Dict[str, Any]:
-        context = super().get_context_data(**kwargs)
-        context["posts"] = blog.models.Post.objects.all().filter(author=self.request.user)
-        return context
+    def get_context_data(self, **kwargs):
+        kwargs = super().get_context_data(**kwargs)
+        if self.request.user == self.object:
+            kwargs["posts"] = self.object.posts.all()
+        else:
+            kwargs["posts"] = self.object.posts.all().filter(status=Post.Status.PUBLISH)
+        return kwargs

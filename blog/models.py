@@ -13,7 +13,7 @@ class Post(models.Model):
         DRAFT = "DRAFT", _("Draft")
         PUBLISH = "PUBLISH", _("Publish")
 
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posts")
     title = models.CharField(max_length=255, blank=False, null=False)
     text = models.TextField(blank=False, null=False)
     status = models.CharField(max_length=7, choices=Status, default=Status.DRAFT)
